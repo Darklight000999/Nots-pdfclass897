@@ -1,196 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="darklight000999 - Ethical Hacking & Cyber Security">
-    <meta name="keywords" content="Ethical Hacking, Cyber Security, Hacking Tutorials, Penetration Testing">
-    <meta name="author" content="darklight000999">
-    <title>darklight000999 | Ethical Hacking</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>darklight000999 - Ethical Hacking & Cyber Security</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', monospace;
+    }
 
-    <style>
-        body {
-            margin: 0;
-            background-color: #0a0a0a;
-            color: #00ff99;
-            font-family: 'Courier New', monospace;
-        }
+    body {
+      background-color: #0a0a0a;
+      color: #00ff99;
+      line-height: 1.6;
+    }
 
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            padding: 15px;
-            background: #000000e0;
-            border-bottom: 2px solid #00ff99;
-        }
+    header {
+      background: #111;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 2px solid #00ff99;
+    }
 
-        header img {
-            height: 50px;
-            width: 50px;
-        }
+    header img {
+      width: 80px;
+      height: auto;
+      display: block;
+      margin: 0 auto 10px;
+    }
 
-        header span {
-            font-size: 2rem;
-            font-weight: bold;
-            text-shadow: 0 0 15px #00ff99;
-        }
+    header h1 {
+      font-size: 2rem;
+      text-shadow: 0 0 10px #00ff99;
+    }
 
-        .hero {
-            text-align: center;
-            padding: 100px 20px;
-            background: url('images/hack1.jpg') no-repeat center center/cover;
-        }
+    /* Gallery */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+    }
 
-        .hero h1 {
-            font-size: 3rem;
-            color: #00ff99;
-            text-shadow: 0 0 20px #00ff99;
-        }
+    .gallery img {
+      width: 100%;
+      border: 2px solid #00ff99;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-        .hero p {
-            font-size: 1.3rem;
-            color: #e0e0e0;
-        }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00ff99;
+    }
 
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #00ff99;
-            color: #000;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
-            text-decoration: none;
-        }
+    /* Social Media Section */
+    .social-box {
+      margin: 40px auto;
+      text-align: center;
+      padding: 20px;
+      border-top: 2px solid #00ff99;
+    }
 
-        .btn:hover {
-            background: #00ffaa;
-            transform: scale(1.05);
-        }
+    .social-box h2 {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      text-shadow: 0 0 8px #00ff99;
+    }
 
-        .section {
-            padding: 60px 20px;
-            text-align: center;
-        }
+    .social-box a img {
+      margin: 10px;
+      transition: transform 0.3s ease;
+    }
 
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
+    .social-box a img:hover {
+      transform: scale(1.1);
+    }
 
-        .gallery img {
-            width: 280px;
-            border: 2px solid #00ff99;
-            border-radius: 10px;
-            box-shadow: 0 0 15px #00ff99;
-            transition: transform 0.3s;
-        }
-
-        .gallery img:hover {
-            transform: scale(1.05);
-        }
-
-        /* Social Links Section */
-        .social-links {
-            text-align: center;
-            margin: 50px 0;
-        }
-
-        .social-links a {
-            display: inline-block;
-            margin: 10px;
-        }
-
-        .social-links img {
-            height: 40px;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-
-        .social-links img:hover {
-            transform: scale(1.1);
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            border-top: 1px solid #00ff99;
-            font-size: 0.9rem;
-            margin-top: 30px;
-        }
-    </style>
+    footer {
+      text-align: center;
+      padding: 15px;
+      border-top: 2px solid #00ff99;
+      font-size: 0.9rem;
+      color: #888;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header>
-        <img src="images/logo.png" alt="darklight000999 Logo">
-        <span>darklight000999</span>
-    </header>
+  <!-- Header with Logo -->
+  <header>
+    <img src="LOGO_URL_HERE" alt="darklight000999 Logo">
+    <h1>darklight000999</h1>
+    <p>Ethical Hacking & Cyber Security</p>
+  </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>Welcome to darklight000999</h1>
-        <p>Cyber Security & Ethical Hacking Resources</p>
-        <a href="#about" class="btn">Explore More</a>
-    </section>
+  <!-- Gallery Section -->
+  <section class="gallery">
+    <img src="IMAGE1_URL_HERE" alt="Hacker Image 1">
+    <img src="IMAGE2_URL_HERE" alt="Hacker Image 2">
+    <img src="IMAGE3_URL_HERE" alt="Hacker Image 3">
+    <img src="IMAGE4_URL_HERE" alt="Hacker Image 4">
+  </section>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <h2>About Us</h2>
-        <p>
-            We share tutorials, tips, and insights for learning Ethical Hacking, 
-            Penetration Testing, and Cyber Security practices. Understand how hackers think 
-            and secure your systems with our guides.
-        </p>
-    </section>
+  <!-- Social Media Section -->
+  <div class="social-box">
+    <h2>Connect With Me</h2>
+    <a href="https://www.instagram.com/darklight000999_?igsh=cmEwN3htaTRodzl3">
+      <img src="https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=instagram&logoColor=white" />
+    </a>
+    <a href="https://t.me/darklight000999">
+      <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" />
+    </a>
+    <a href="https://chat.whatsapp.com/KALyrkZm2ru2xiTY9u0Tc0?mode=ac_t">
+      <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" />
+    </a>
+    <a href="https://www.facebook.com/darklight000999">
+      <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" />
+    </a>
+    <a href="https://youtube.com/@mr_br_hacker_33?si=IBcIbcrVE1Xur_vL">
+      <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
+    </a>
+    <a href="https://github.com/Darklight000999">
+      <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white" />
+    </a>
+    <a href="https://share.google/BIo6sUsdFCFMMkc0z">
+      <img src="https://img.shields.io/badge/Google%20Business-4285F4?style=for-the-badge&logo=google&logoColor=white" />
+    </a>
+  </div>
 
-    <!-- Gallery Section -->
-    <section class="section">
-        <h2>Cyber Security Gallery</h2>
-        <div class="gallery">
-            <img src="images/hack1.jpg" alt="Hacker Image 1">
-            <img src="images/hack2.jpg" alt="Hacker Image 2">
-            <img src="images/hack3.jpg" alt="Hacker Image 3">
-            <img src="images/hack4.jpg" alt="Hacker Image 4">
-        </div>
-    </section>
-
-    <!-- Social Links Section -->
-    <section class="social-links">
-        <h2>Connect with Me</h2>
-        <a href="https://www.instagram.com/darklight000999_?igsh=cmEwN3htaTRodzl3">
-            <img src="https://img.shields.io/badge/Instagram-%23E4405F.svg?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram">
-        </a>
-        <a href="https://t.me/darklight000999">
-            <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white" alt="Telegram">
-        </a>
-        <a href="https://chat.whatsapp.com/KALyrkZm2ru2xiTY9u0Tc0?mode=ac_t">
-            <img src="https://img.shields.io/badge/WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="WhatsApp">
-        </a>
-        <a href="https://www.facebook.com/darklight000999">
-            <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook">
-        </a>
-        <a href="https://youtube.com/@mr_br_hacker_33?si=IBcIbcrVE1Xur_vL">
-            <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube">
-        </a>
-        <a href="https://github.com/Darklight000999">
-            <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
-        </a>
-        <a href="https://share.google/BIo6sUsdFCFMMkc0z">
-            <img src="https://img.shields.io/badge/Google%20Business-4285F4?style=for-the-badge&logo=google&logoColor=white" alt="Google Business">
-        </a>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        &copy; 2025 darklight000999 | Ethical Hacking & Cyber Security
-    </footer>
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 darklight000999 | Ethical Hacking & Cyber Security</p>
+  </footer>
 
 </body>
 </html>
