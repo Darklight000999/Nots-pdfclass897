@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>darklight000999 | Ethical Hacking</title>
+  <style>
+    body {
+      background-color: #0f0f0f;
+      color: #00ff88;
+      font-family: 'Courier New', monospace;
+      padding: 40px;
+    }
+    .typewriter {
+      font-size: 18px;
+      white-space: pre-wrap;
+      border-left: 2px solid #00ff88;
+      padding-left: 10px;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0% { border-color: transparent; }
+      50% { border-color: #00ff88; }
+      100% { border-color: transparent; }
+    }
+  </style>
+</head>
+<body>
+  <h1>👨‍💻 darklight000999</h1>
+  <h3>🛡️ Ethical Hacking | Cybersecurity Enthusiast</h3>
+  <div id="code" class="typewriter"></div>
+
+  <script>
+    const text = `
+> Starting Terminal...
+> Accessing Server...
+> Connecting to darknet...
+> Success!
+
+$ whoami
+> darklight000999
+
+$ nmap -sV target.com
+> Scanning ports...
+
+# Welcome to my Ethical Hacking & Cyber Security World.
+# Learn | Test | Secure | Repeat
+`;
+
+    let i = 0;
+    function typeWriter() {
+      if (i < text.length) {
+        document.getElementById("code").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+      }
+    }
+    typeWriter();
+  </script>
+</body>
+</html>
