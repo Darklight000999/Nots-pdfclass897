@@ -5,153 +5,92 @@
   <title>darklight000999 - Secure Viewer</title>
   <style>
     * {margin:0; padding:0; box-sizing:border-box;}
-
     body {
       font-family: 'Courier New', monospace;
       background: black;
       color: #00ff00;
       overflow-x: hidden;
-      user-select: none; /* ❌ Copy block */
+      user-select: none;
       position: relative;
     }
-
     canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      z-index: -2;
-      width: 100%;
-      height: 100%;
-      background: black;
+      position: fixed; top:0; left:0; z-index:-2;
+      width:100%; height:100%; background:black;
     }
-
     header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
-      padding: 20px;
-      font-size: 28px;
-      font-weight: bold;
-      color: #00ff00;
-      text-shadow: 0 0 15px #00ff00;
-      border-bottom: 2px solid #00ff00;
-      margin-bottom: 20px;
-      position: relative;
-      z-index: 5;
+      display:flex; align-items:center; justify-content:center;
+      gap:20px; padding:20px;
+      font-size:28px; font-weight:bold; color:#00ff00;
+      text-shadow:0 0 15px #00ff00;
+      border-bottom:2px solid #00ff00; margin-bottom:20px;
+      position:relative; z-index:5;
     }
-
     header img {
-      height: 50px;
-      width: 50px;
-      object-fit: cover;
-      border-radius: 50%;
-      box-shadow: 0 0 10px #00ff00;
+      height:50px; width:50px; object-fit:cover;
+      border-radius:50%; box-shadow:0 0 10px #00ff00;
     }
-
-    nav {
-      text-align: center;
-      margin: 20px;
-      position: relative;
-      z-index: 5;
-    }
-
+    nav {text-align:center; margin:20px; position:relative; z-index:5;}
     nav button {
-      margin: 10px;
-      padding: 10px 20px;
-      background: #00ff00;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      box-shadow: 0 0 10px #00ff00;
+      margin:10px; padding:10px 20px;
+      background:#00ff00; color:black; border:none; border-radius:5px;
+      cursor:pointer; font-weight:bold;
+      box-shadow:0 0 10px #00ff00;
     }
-
     section {
-      display: none;
-      padding: 20px;
-      position: relative;
-      z-index: 5;
+      display:none; padding:20px; position:relative; z-index:5;
     }
-
-    section.active {
-      display: block;
-    }
-
+    section.active {display:block;}
     .viewer img {
-      max-width: 80%;
-      margin: 20px auto;
-      display: block;
-      pointer-events: none; /* ❌ Save image block */
-      box-shadow: 0 0 20px #00ff00;
-      border-radius: 10px;
+      max-width:80%; margin:20px auto; display:block;
+      pointer-events:none; box-shadow:0 0 20px #00ff00;
+      border-radius:10px;
     }
-
-    /* 🔥 Watermark Overlay */
     .watermark-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 9999; /* हमेशा सबसे ऊपर */
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      opacity: 0.15; /* Transparent */
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      pointer-events:none; z-index:9999;
+      display:flex; flex-wrap:wrap;
+      justify-content:center; align-items:center;
+      opacity:0.15;
     }
-
     .watermark-text {
-      font-size: 48px;
-      font-weight: bold;
-      color: #00ff00;
-      text-shadow: 0 0 10px #00ff00;
-      transform: rotate(-30deg);
-      margin: 50px;
-      white-space: nowrap;
+      font-size:48px; font-weight:bold; color:#00ff00;
+      text-shadow:0 0 10px #00ff00; transform:rotate(-30deg);
+      margin:50px; white-space:nowrap;
     }
   </style>
 </head>
 <body>
   <canvas id="matrix"></canvas>
 
-  <!-- Header with Logo + Title -->
   <header>
-    <img src="https://raw.githubusercontent.com/Darklight000999/darklight000999-ehacking.wepsait-/main/Screenshot_20250821_142735.jpg" alt="Logo Left">
+    <img src="https://raw.githubusercontent.com/Darklight000999/Nots-pdfclass897/main/Screenshot_20250821_142735.jpg" alt="Logo Left">
     darklight000999
-    <img src="https://raw.githubusercontent.com/Darklight000999/darklight000999-ehacking.wepsait-/main/Screenshot_20250821_142735.jpg" alt="Logo Right">
+    <img src="https://raw.githubusercontent.com/Darklight000999/Nots-pdfclass897/main/Screenshot_20250821_142735.jpg" alt="Logo Right">
   </header>
 
-  <!-- Navigation -->
   <nav>
     <button onclick="showSection('notes')">📒 Notes</button>
     <button onclick="showSection('pdf')">📕 PDF Viewer</button>
   </nav>
 
-  <!-- Notes Section -->
   <section id="notes" class="active">
     <h2>📒 Secure Notes</h2>
     <p>
-      यह सेक्शन आपके Text Notes के लिए है।  
-      यहाँ आप Premium Students को Notes दिखा सकते हैं।  
-      <br><br>
-      Example:  
-      - Topic 1: Introduction to Physics  
-      - Topic 2: Laws of Motion  
-      - Topic 3: Gravitation  
+      यह सेक्शन आपके Text Notes के लिए है।<br>
+      Premium students को यह display कर सकते हैं।
     </p>
   </section>
 
-  <!-- PDF Section -->
   <section id="pdf">
     <h2>📕 Secure PDF Viewer</h2>
     <div class="viewer">
-      <img src="Road map satisfied Ethical Hacke_202508231918_1.jpg="Page 1">
-      <img src="page2.jpg" alt="Page 2">
-      <img src="page3.jpg" alt="Page 3">
+      <!-- अवरोही क्रम में GitHub पर मौजूद images दिखाएँ -->
+      <img src="Road map satisfied Ethical Hacke_202508231918_6.jpg" alt="Page 6">
+      <img src="Road map satisfied Ethical Hacke_202508231918_5.jpg" alt="Page 5">
+      <img src="Road map satisfied Ethical Hacke_202508231918_4.jpg" alt="Page 4">
+      <img src="Road map satisfied Ethical Hacke_202508231918_3.jpg" alt="Page 3">
+      <img src="Road map satisfied Ethical Hacke_202508231918_2.jpg" alt="Page 2">
+      <img src="Road map satisfied Ethical Hacke_202508231918_1.jpg" alt="Page 1">
     </div>
   </section>
 
@@ -159,78 +98,53 @@
   <div class="watermark-overlay" id="wm-layer"></div>
 
   <script>
-    /* ❌ Right Click Disable */
     document.addEventListener("contextmenu", e => e.preventDefault());
-
-    /* ❌ Print + Shortcut Disable */
     document.addEventListener("keydown", function(e) {
-      if (
-        (e.ctrlKey && (e.key === "p" || e.key === "s" || e.key === "u" || e.key === "c")) ||
-        e.key === "PrintScreen"
-      ) {
-        alert("🚫 Action Blocked!");
-        e.preventDefault();
+      if ((e.ctrlKey && (["p","s","u","c"].includes(e.key))) || e.key === "PrintScreen") {
+        alert("🚫 Action Blocked!"); e.preventDefault();
       }
     });
-
-    /* ❌ Screenshot Detect */
     window.addEventListener("keyup", function(e) {
       if (e.key === "PrintScreen") {
         document.body.innerHTML = "<h1 style='color:red;text-align:center;'>⚠ Screenshot Not Allowed ⚠</h1>";
       }
     });
-
-    /* Navigation Switch */
     function showSection(id) {
       document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
       document.getElementById(id).classList.add("active");
     }
 
-    /* Dynamic Watermark Overlay */
-    const userName = "Rahul Sharma";   // <-- User का नाम
-    const userEmail = "rahul@example.com"; // <-- User का Email/ID
+    const userName = "Rahul Sharma";  // Update dynamically if available
+    const userEmail = "rahul@example.com";
     const watermarkText = `${userName} | ${userEmail}`;
-
     const wmLayer = document.getElementById("wm-layer");
-    for (let i = 0; i < 20; i++) { // watermark repeat
+    for (let i = 0; i < 20; i++) {
       const span = document.createElement("div");
       span.className = "watermark-text";
       span.innerText = watermarkText;
       wmLayer.appendChild(span);
     }
 
-    /* Matrix Background Effect */
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
-
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-
     const letters = "01";
     const fontSize = 14;
     const columns = canvas.width / fontSize;
-
-    const drops = [];
-    for (let x = 0; x < columns; x++) drops[x] = 1;
-
+    const drops = Array(columns).fill(1);
     function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+      ctx.fillStyle = "rgba(0,0,0,0.05)";
+      ctx.fillRect(0,0,canvas.width,canvas.height);
       ctx.fillStyle = "#0F0";
       ctx.font = fontSize + "px monospace";
-
-      for (let i = 0; i < drops.length; i++) {
+      drops.forEach((d, i) => {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975)
-          drops[i] = 0;
-
+        ctx.fillText(text, i * fontSize, d * fontSize);
+        if (d * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
-      }
+      });
     }
-
     setInterval(draw, 33);
   </script>
 </body>
