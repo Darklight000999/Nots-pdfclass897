@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,289 +9,314 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
-    }
+    }body {
+  background: #000;
+  color: #00ffcc;
+  text-align: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
 
-    body {
-      background: #000;
-      color: #00ffcc;
-      text-align: center;
-      overflow-x: hidden;
-      overflow-y: auto;
-      scroll-behavior: smooth;
-    }
+canvas#matrix {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #000;
+}
 
-    canvas#matrix {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: #000;
-    }
+/* Navbar */
+nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.8);
+  border-bottom: 2px solid #00ffaa;
+  z-index: 1000;
+  text-align: left;
+  padding: 5px 10px;
+}
 
-    /* Navbar */
-    nav {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      background: rgba(0,0,0,0.8);
-      border-bottom: 2px solid #00ffaa;
-      z-index: 1000;
-    }
+.menu-toggle {
+  font-size: 28px;
+  color: #00ffaa;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
 
-    .menu-toggle {
-      display: none;
-      font-size: 28px;
-      color: #00ffaa;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-    }
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin: 0;
+}
+nav ul li {
+  margin: 5px 15px;
+}
+nav ul li a {
+  color: #00ffaa;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+nav ul li a:hover {
+  color: #fff;
+  text-shadow: 0 0 10px #00ffaa, 0 0 20px #00ffcc;
+}
 
-    nav ul {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      padding: 10px;
-      margin: 0;
-    }
-    nav ul li {
-      margin: 5px 15px;
-    }
-    nav ul li a {
-      color: #00ffaa;
-      text-decoration: none;
-      font-weight: bold;
-      transition: color 0.3s;
-    }
-    nav ul li a:hover {
-      color: #fff;
-      text-shadow: 0 0 10px #00ffaa, 0 0 20px #00ffcc;
-    }
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  width: 250px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  border-right: 2px solid #00ffaa;
+  padding-top: 60px;
+  transition: left 0.3s ease;
+  z-index: 2000;
+}
+.sidebar.active {
+  left: 0;
+}
+.sidebar ul {
+  flex-direction: column;
+  padding: 0;
+  text-align: left;
+}
+.sidebar ul li {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+.sidebar ul li a {
+  font-size: 1.1rem;
+}
 
-    /* Mobile Menu */
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-        flex-direction: column;
-        align-items: center;
-      }
-      nav ul.active {
-        display: flex;
-      }
-      .menu-toggle {
-        display: block;
-        position: absolute;
-        left: 10px;
-        top: 5px;
-      }
-    }
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  color: #00ffaa;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
 
-    /* Logo */
-    .logo img {
-      margin: 30px auto;
-      width: 140px;
-      border-radius: 50%;
-      border: 3px solid #00ffcc;
-      box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffaa;
-      animation: pulse 3s infinite;
-      display: block;
-    }
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none;
+  }
+  .sidebar {
+    display: none;
+  }
+  nav ul {
+    display: flex;
+  }
+}
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+  }
+}
 
-    h1 {
-      font-size: 2.2rem;
-      text-shadow: 0 0 15px #00ffaa, 0 0 30px #00ffcc;
-      animation: glow 2s infinite alternate;
-      padding: 0 10px;
-    }
+/* Logo */
+.logo img {
+  margin: 30px auto;
+  width: 140px;
+  border-radius: 50%;
+  border: 3px solid #00ffcc;
+  box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffaa;
+  animation: pulse 3s infinite;
+  display: block;
+}
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #00ffaa; }
-      to { text-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffaa; }
-    }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 
-    h2 {
-      font-size: 1.3rem;
-      margin: 10px 0 30px;
-      color: #00ffaa;
-      padding: 0 10px;
-    }
+h1 {
+  font-size: 2.2rem;
+  text-shadow: 0 0 15px #00ffaa, 0 0 30px #00ffcc;
+  animation: glow 2s infinite alternate;
+  padding: 0 10px;
+}
 
-    /* About Section */
-    .about {
-      border: 2px solid #00ffcc;
-      border-radius: 15px;
-      margin: 20px auto;
-      padding: 15px;
-      width: 90%;
-      max-width: 800px;
-      background: rgba(0, 0, 0, 0.6);
-      box-shadow: 0 0 15px #00ffcc;
-      animation: fadeInUp 2s ease;
-    }
+@keyframes glow {
+  from { text-shadow: 0 0 10px #00ffaa; }
+  to { text-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffaa; }
+}
 
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(50px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+h2 {
+  font-size: 1.3rem;
+  margin: 10px 0 30px;
+  color: #00ffaa;
+  padding: 0 10px;
+}
 
-    /* Gallery */
-    .gallery-section {
-      margin: 30px 0;
-    }
+/* About Section */
+.about {
+  border: 2px solid #00ffcc;
+  border-radius: 15px;
+  margin: 20px auto;
+  padding: 15px;
+  width: 90%;
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 15px #00ffcc;
+  animation: fadeInUp 2s ease;
+}
 
-    .gallery-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
-      padding: 0 15px;
-      animation: fadeIn 2.5s ease;
-    }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+/* Gallery */
+.gallery-section {
+  margin: 30px 0;
+}
 
-    .gallery-container a {
-      background: rgba(0, 255, 170, 0.1);
-      border: 2px solid #00ffaa;
-      border-radius: 15px;
-      padding: 8px;
-      text-decoration: none;
-      color: #00ffaa;
-      transition: all 0.4s ease;
-      box-shadow: 0 0 15px #00ffaa;
-      display: block;
-    }
+.gallery-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  padding: 0 15px;
+  animation: fadeIn 2.5s ease;
+}
 
-    .gallery-container a:hover {
-      background: #00ffaa;
-      color: #000;
-      transform: scale(1.05);
-      box-shadow: 0 0 25px #00ffaa, 0 0 50px #00ffcc;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
-    .gallery-container img {
-      width: 100%;
-      border-radius: 10px;
-    }
+.gallery-container a {
+  background: rgba(0, 255, 170, 0.1);
+  border: 2px solid #00ffaa;
+  border-radius: 15px;
+  padding: 8px;
+  text-decoration: none;
+  color: #00ffaa;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 15px #00ffaa;
+  display: block;
+}
 
-    /* Social Icons */
-    .social-section {
-      margin: 40px 0;
-      padding-top: 20px;
-      border-top: 2px solid #00ffcc;
-      animation: fadeInUp 2s ease;
-    }
+.gallery-container a:hover {
+  background: #00ffaa;
+  color: #000;
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00ffaa, 0 0 50px #00ffcc;
+}
 
-    .social-icons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 12px;
-      padding: 0 10px;
-    }
+.gallery-container img {
+  width: 100%;
+  border-radius: 10px;
+}
 
-    .social-icons a img {
-      width: 140px;
-      border-radius: 10px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
+/* Social Icons */
+.social-section {
+  margin: 40px 0;
+  padding-top: 20px;
+  border-top: 2px solid #00ffcc;
+  animation: fadeInUp 2s ease;
+}
 
-    .social-icons a img:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 20px #00ffaa, 0 0 40px #00ffcc;
-    }
+.social-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  padding: 0 10px;
+}
 
-    /* Footer */
-    footer {
-      margin-top: 30px;
-      padding: 15px;
-      font-size: 0.8rem;
-      color: #00ffaa;
-      border-top: 1px solid #00ffaa;
-      background: rgba(0, 0, 0, 0.6);
-    }
+.social-icons a img {
+  width: 140px;
+  border-radius: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.social-icons a img:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 20px #00ffaa, 0 0 40px #00ffcc;
+}
+
+/* Footer */
+footer {
+  margin-top: 30px;
+  padding: 15px;
+  font-size: 0.8rem;
+  color: #00ffaa;
+  border-top: 1px solid #00ffaa;
+  background: rgba(0, 0, 0, 0.6);
+}
 
   </style>
 </head>
 <body>
-  <canvas id="matrix"></canvas>
-
-  <!-- Navigation Menu -->
-  <nav>
+  <canvas id="matrix"></canvas>  <!-- Navigation Menu -->  <nav>
     <button class="menu-toggle">≡</button>
     <ul>
-      <li><a href="#home">HOME (आपका मेन्यू लिंक)</a></li>
-      <li><a href="#join">CLASS जॉइन करें (आपका मेन्यू लिंक)</a></li>
-      <li><a href="#pdf">PDF AND NOTS (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#home">होम (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#join">क्लास जॉइन करें (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#pdf">पीडीएफ (आपका मेन्यू लिंक)</a></li>
       <li><a href="#notes">नोट्स और कमांड्स (आपका मेन्यू लिंक)</a></li>
       <li><a href="#ehacking">ईहैकिंग (आपका मेन्यू लिंक)</a></li>
       <li><a href="#services">सर्विस और सपोर्ट (आपका मेन्यू लिंक)</a></li>
     </ul>
-  </nav>
-
-  <div id="home" class="logo">
+  </nav>  <!-- Sidebar -->  <div class="sidebar" id="sidebar">
+    <button class="close-btn">×</button>
+    <ul>
+      <li><a href="#home">होम (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#join">क्लास जॉइन करें (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#pdf">पीडीएफ (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#notes">नोट्स और कमांड्स (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#ehacking">ईहैकिंग (आपका मेन्यू लिंक)</a></li>
+      <li><a href="#services">सर्विस और सपोर्ट (आपका मेन्यू लिंक)</a></li>
+    </ul>
+  </div>  <div id="home" class="logo">
     <img src="Screenshot_20250821_142735.jpg" alt="darklight Logo">
-  </div>
-
-  <h1>darklight000999</h1>
-  <h2>Ethical Hacking & Cyber Security</h2>
-
-  <!-- About Us Section -->
-  <div id="join" class="about">
+  </div>  <h1>darklight000999</h1>
+  <h2>Ethical Hacking & Cyber Security</h2>  <!-- About Us Section -->  <div id="join" class="about">
     <h2>About Us</h2>
     <p>
       Welcome to <b>darklight000999</b>. We specialize in ethical hacking, cybersecurity training,
       and providing secure solutions to protect digital identities and systems from vulnerabilities.
     </p>
-  </div>
-
-  <!-- Gallery -->
-  <div id="pdf" class="gallery-section">
+  </div>  <!-- Gallery -->  <div id="pdf" class="gallery-section">
     <h2>Gallery</h2>
     <div class="gallery-container">
       <a href="images/hacker1.jpg" target="_blank">
         <img src="images/hacker1.jpg" alt="Hacker Image 1">
         <p>Hacker Image 1</p>
-      </a>
+      </a><a href="images/hacker2.jpg" target="_blank">
+    <img src="images/hacker2.jpg" alt="Hacker Image 2">
+    <p>Hacker Image 2</p>
+  </a>
 
-      <a href="images/hacker2.jpg" target="_blank">
-        <img src="images/hacker2.jpg" alt="Hacker Image 2">
-        <p>Hacker Image 2</p>
-      </a>
+  <a href="images/hacker3.jpg" target="_blank">
+    <img src="images/hacker3.jpg" alt="Hacker Image 3">
+    <p>Hacker Image 3</p>
+  </a>
+</div>
 
-      <a href="images/hacker3.jpg" target="_blank">
-        <img src="images/hacker3.jpg" alt="Hacker Image 3">
-        <p>Hacker Image 3</p>
-      </a>
-    </div>
-  </div>
-
-  <!-- Notes Section -->
-  <div id="notes" class="about">
+  </div>  <!-- Notes Section -->  <div id="notes" class="about">
     <h2>Notes & Commands</h2>
     <p>Here you can attach PDF notes, important hacking commands and resources.</p>
-  </div>
-
-  <!-- Ehacking Section -->
-  <div id="ehacking" class="about">
+  </div>  <!-- Ehacking Section -->  <div id="ehacking" class="about">
     <h2>Ehacking</h2>
     <p>Dedicated section for ethical hacking tutorials, tools, and labs.</p>
-  </div>
-
-  <!-- Social Media Section -->
-  <div id="services" class="social-section">
+  </div>  <!-- Social Media Section -->  <div id="services" class="social-section">
     <h2>Follow Us</h2>
     <div class="social-icons">
       <a href="https://www.instagram.com/darklight000999_?igsh=cmEwN3htaTRodzl3" target="_blank">
@@ -308,14 +332,9 @@
         <img src="https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white" alt="Twitter">
       </a>
     </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
+  </div>  <!-- Footer -->  <footer>
     <p>© 2025 darklight000999 | All Rights Reserved</p>
-  </footer>
-
-  <script>
+  </footer>  <script>
     // Matrix Rain Effect with red and blue colors
     const canvas = document.getElementById("matrix");
     const ctx = canvas.getContext("2d");
@@ -363,14 +382,23 @@
       }
     });
 
-    // Toggle Mobile Menu
+    // Sidebar Toggle
     const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('nav ul');
+    const sidebar = document.getElementById('sidebar');
+    const closeBtn = document.querySelector('.close-btn');
 
     menuToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
+      sidebar.classList.add('active');
     });
-  </script>
 
-</body>
+    closeBtn.addEventListener('click', () => {
+      sidebar.classList.remove('active');
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target !== sidebar && !sidebar.contains(e.target) && e.target !== menuToggle) {
+        sidebar.classList.remove('active');
+      }
+    });
+  </script></body>
 </html>
