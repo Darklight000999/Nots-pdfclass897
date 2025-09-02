@@ -8,7 +8,7 @@
     *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
     body {
       height:100vh;display:flex;justify-content:center;align-items:center;
-      background:#0a0f1a; /* Dark cyber background */
+      background:#0a0f1a;
       color:#fff;
     }
     .card {
@@ -90,8 +90,8 @@
     </div>
     <div class="input-group">
       <input type="password" id="password" placeholder="Password">
-      <button class="toggle-btn" id="togglePassword">
-        <i class="fa-regular fa-eye" id="eyeIcon"></i>
+      <button type="button" class="toggle-btn" id="togglePassword">
+        <i class="fa-solid fa-eye" id="eyeIcon"></i>
       </button>
     </div>
 
@@ -113,7 +113,7 @@
   </div>
 
   <script>
-    // 🔹 Firebase Config (अपने Firebase Console से copy करो)
+    // 🔹 Firebase Config (अपना Firebase Console वाला config यहाँ डालो)
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -127,22 +127,24 @@
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Password Toggle
+    // ✅ Password Toggle Fix
     const passwordInput = document.getElementById("password");
     const toggleBtn = document.getElementById("togglePassword");
     const eyeIcon = document.getElementById("eyeIcon");
 
     toggleBtn.addEventListener("click", () => {
-      if(passwordInput.type === "password"){
+      if (passwordInput.type === "password") {
         passwordInput.type = "text";
-        eyeIcon.classList.replace("fa-eye","fa-eye-slash");
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
       } else {
         passwordInput.type = "password";
-        eyeIcon.classList.replace("fa-eye-slash","fa-eye");
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
       }
     });
 
-    // Email/Password Login
+    // ✅ Email/Password Login
     function login(){
       const email=document.getElementById("email").value;
       const pass=document.getElementById("password").value;
@@ -153,7 +155,7 @@
         .catch(err=>alert("Error ❌ " + err.message));
     }
 
-    // Email/Password SignUp
+    // ✅ Email/Password SignUp
     function signup(){
       const email=document.getElementById("email").value;
       const pass=document.getElementById("password").value;
@@ -164,7 +166,7 @@
         .catch(err=>alert("Error ❌ " + err.message));
     }
 
-    // Google Login
+    // ✅ Google Login
     function googleLogin(){
       const provider=new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
@@ -174,7 +176,7 @@
         .catch(err=>alert("Error ❌ " + err.message));
     }
 
-    // Forgot Password
+    // ✅ Forgot Password
     function resetPassword(){
       const email=document.getElementById("email").value;
       if(!email){alert("Enter your email first!");return;}
@@ -183,12 +185,12 @@
         .catch(err=>alert("Error ❌ " + err.message));
     }
 
-    // Logout
+    // ✅ Logout
     function logout(){
       auth.signOut().then(()=>alert("Logged out ✅"));
     }
 
-    // Auto update user info
+    // ✅ Auto update user info
     auth.onAuthStateChanged(user=>{
       document.getElementById("userEmail").innerText = user ? user.email : "No user";
     });
