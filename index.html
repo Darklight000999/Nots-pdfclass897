@@ -5,9 +5,9 @@
   <meta 
     name="viewport" 
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Neumorphism Login with Google</title>
+  <title>Neumorphism Auth</title>
   <style>
-    /* ===== Background Animation ===== */
+    /* Background Gradient Animation */
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
@@ -19,46 +19,44 @@
       background-size: 400% 400%;
       animation: gradientBG 12s ease infinite;
     }
-
     @keyframes gradientBG {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* ===== Login Container ===== */
-    .login-container {
+    /* Auth Container */
+    .auth-container {
       width: 100%;
       max-width: 380px;
       padding: 20px;
     }
-
-    .login-card {
+    .auth-card {
       background: #e0e0e0;
       border-radius: 20px;
       box-shadow: 9px 9px 16px #bebebe,
                   -9px -9px 16px #ffffff;
       padding: 30px;
       text-align: center;
+      position: relative;
     }
-
-    .login-header h2 {
+    h2 {
       margin: 10px 0;
       font-size: 22px;
       font-weight: 600;
       color: #333;
     }
-    .login-header p {
+    p {
       font-size: 14px;
       color: #555;
     }
 
-    /* ===== Form ===== */
+    /* Form */
     .form-group {
       margin: 15px 0;
       text-align: left;
+      position: relative;
     }
-
     .neu-input {
       position: relative;
       background: #e0e0e0;
@@ -67,7 +65,6 @@
                   inset -6px -6px 12px #ffffff;
       padding: 12px 15px;
     }
-
     .neu-input input {
       width: 100%;
       border: none;
@@ -76,7 +73,6 @@
       font-size: 15px;
       color: #333;
     }
-
     .neu-input label {
       position: absolute;
       left: 15px;
@@ -87,7 +83,6 @@
       pointer-events: none;
       transition: 0.3s ease;
     }
-
     .neu-input input:focus + label,
     .neu-input input:not(:placeholder-shown) + label {
       top: -6px;
@@ -96,7 +91,7 @@
       color: #333;
     }
 
-    /* ===== Password Toggle ===== */
+    /* Password Toggle */
     .password-toggle {
       position: absolute;
       right: 12px;
@@ -106,18 +101,16 @@
       border: none;
       cursor: pointer;
     }
-
     .password-toggle svg {
       width: 20px;
       height: 20px;
       stroke: #555;
     }
-
     .eye-closed { display: none; }
     .show-password .eye-open { display: none; }
     .show-password .eye-closed { display: inline; }
 
-    /* ===== Buttons ===== */
+    /* Button */
     .neu-button {
       width: 100%;
       padding: 12px;
@@ -132,10 +125,18 @@
                   -6px -6px 12px #ffffff;
       transition: all 0.2s ease;
     }
-
     .neu-button:hover {
       box-shadow: inset 6px 6px 12px #bebebe,
                   inset -6px -6px 12px #ffffff;
+    }
+
+    /* Toggle Link */
+    .toggle-link {
+      margin-top: 15px;
+      font-size: 14px;
+      color: #0077cc;
+      cursor: pointer;
+      display: inline-block;
     }
 
     /* Divider */
@@ -173,7 +174,7 @@
       height: 22px;
     }
 
-    /* Success Message */
+    /* Success Msg */
     .success-message {
       display: none;
       margin-top: 20px;
@@ -181,56 +182,82 @@
       font-weight: 600;
     }
     .success-message.show { display: block; }
+
+    /* Hide Signup/Login Form */
+    #signupForm { display: none; }
   </style>
 </head>
 <body>
-  <div class="login-container">
-    <div class="login-card">
-      <div class="login-header">
-        <h2>Welcome Back</h2>
-        <p>Please sign in to continue</p>
-      </div>
+  <div class="auth-container">
+    <div class="auth-card">
 
       <!-- Login Form -->
-      <form id="loginForm" novalidate>
-        <div class="form-group neu-input">
-          <input type="email" id="email" placeholder=" " required>
-          <label for="email">Email</label>
+      <div id="loginForm">
+        <h2>Login</h2>
+        <form id="loginFormElement">
+          <div class="form-group neu-input">
+            <input type="email" id="loginEmail" placeholder=" " required>
+            <label for="loginEmail">Email</label>
+          </div>
+          <div class="form-group neu-input">
+            <input type="password" id="loginPassword" placeholder=" " required>
+            <label for="loginPassword">Password</label>
+            <button type="button" class="password-toggle" data-target="loginPassword">
+              <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
+          <button type="submit" class="neu-button">Sign In</button>
+        </form>
+
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span>or continue with</span>
+          <div class="divider-line"></div>
         </div>
 
-        <div class="form-group neu-input">
-          <input type="password" id="password" placeholder=" " required>
-          <label for="password">Password</label>
-          <button type="button" class="password-toggle" id="passwordToggle">
-            <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-              <circle cx="12" cy="12" r="3"/>
-            </svg>
-            <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-              <line x1="1" y1="1" x2="23" y2="23"/>
-            </svg>
-          </button>
-        </div>
+        <button type="button" class="social-btn" id="googleLogin">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg">
+        </button>
 
-        <button type="submit" class="neu-button">Sign In</button>
-      </form>
-
-      <!-- Divider -->
-      <div class="divider">
-        <div class="divider-line"></div>
-        <span>or continue with</span>
-        <div class="divider-line"></div>
+        <div class="toggle-link" onclick="toggleForms()">Don’t have an account? Create one</div>
       </div>
 
-      <!-- Google Login -->
-      <button type="button" class="social-btn" id="googleSignIn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google Logo">
-      </button>
+      <!-- Signup Form -->
+      <div id="signupForm">
+        <h2>Create Account</h2>
+        <form id="signupFormElement">
+          <div class="form-group neu-input">
+            <input type="email" id="signupEmail" placeholder=" " required>
+            <label for="signupEmail">Email</label>
+          </div>
+          <div class="form-group neu-input">
+            <input type="password" id="signupPassword" placeholder=" " required>
+            <label for="signupPassword">Password</label>
+            <button type="button" class="password-toggle" data-target="signupPassword">
+              <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg class="eye-closed" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                <line x1="1" y1="1" x2="23" y2="23"/>
+              </svg>
+            </button>
+          </div>
+          <button type="submit" class="neu-button">Sign Up</button>
+        </form>
 
-      <div class="success-message" id="successMessage">
-        ✅ Login successful! Redirecting...
+        <div class="toggle-link" onclick="toggleForms()">Already have an account? Login</div>
       </div>
+
+      <div class="success-message" id="successMessage">✅ Success! Redirecting...</div>
     </div>
   </div>
 
@@ -238,7 +265,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.24.0/firebase-auth-compat.js"></script>
   <script>
-    // ===== Firebase Config (अपना config डालो) =====
+    // Firebase Config (अपना config डालना होगा)
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -247,49 +274,65 @@
       messagingSenderId: "YOUR_SENDER_ID",
       appId: "YOUR_APP_ID"
     };
-
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
-    // Email/Password Login
-    const loginForm = document.getElementById('loginForm');
     const successMessage = document.getElementById('successMessage');
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
 
+    // Toggle Forms
+    function toggleForms() {
+      document.getElementById("loginForm").style.display =
+        document.getElementById("loginForm").style.display === "none" ? "block" : "none";
+      document.getElementById("signupForm").style.display =
+        document.getElementById("signupForm").style.display === "block" ? "none" : "block";
+    }
+
+    // Password Toggle
+    document.querySelectorAll(".password-toggle").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const targetId = btn.getAttribute("data-target");
+        const input = document.getElementById(targetId);
+        const isPassword = input.type === "password";
+        input.type = isPassword ? "text" : "password";
+        btn.classList.toggle("show-password", isPassword);
+      });
+    });
+
+    // Login
+    document.getElementById("loginFormElement").addEventListener("submit", e => {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
       auth.signInWithEmailAndPassword(email, password)
         .then(() => {
-          successMessage.classList.add('show');
-          setTimeout(() => {
-            window.location.href = "home.html";
-          }, 1500);
+          successMessage.classList.add("show");
+          setTimeout(() => { window.location.href = "home.html"; }, 1500);
+        })
+        .catch(err => alert(err.message));
+    });
+
+    // Signup
+    document.getElementById("signupFormElement").addEventListener("submit", e => {
+      e.preventDefault();
+      const email = document.getElementById("signupEmail").value;
+      const password = document.getElementById("signupPassword").value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          successMessage.classList.add("show");
+          setTimeout(() => { window.location.href = "home.html"; }, 1500);
         })
         .catch(err => alert(err.message));
     });
 
     // Google Login
-    const googleBtn = document.getElementById('googleSignIn');
-    googleBtn.addEventListener('click', () => {
+    document.getElementById("googleLogin").addEventListener("click", () => {
       const provider = new firebase.auth.GoogleAuthProvider();
       auth.signInWithPopup(provider)
         .then(() => {
-          successMessage.classList.add('show');
-          setTimeout(() => {
-            window.location.href = "home.html";
-          }, 1500);
+          successMessage.classList.add("show");
+          setTimeout(() => { window.location.href = "home.html"; }, 1500);
         })
         .catch(err => alert(err.message));
-    });
-
-    // Password Toggle
-    const passwordToggle = document.getElementById('passwordToggle');
-    passwordToggle.addEventListener('click', () => {
-      const input = document.getElementById('password');
-      const isPassword = input.type === "password";
-      input.type = isPassword ? "text" : "password";
-      passwordToggle.classList.toggle("show-password", isPassword);
     });
   </script>
 </body>
