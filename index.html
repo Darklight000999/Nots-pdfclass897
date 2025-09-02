@@ -3,227 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Login / Signup — Firebase Auth (Google + Email)</title>
+  <title>Login - Firebase Auth</title>
   <style>
-    :root{
-      --bg:#4578ff; --card:#fff; --accent:#0b73c9; --muted:#7b8aa3;
-      --radius:12px; --gap:18px; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-    body{margin:0;background:linear-gradient(180deg,var(--bg),#3b67e6);min-height:100vh;
-      display:flex;align-items:center;justify-content:center;padding:28px;}
-    .wrap{display:grid;grid-template-columns:1fr 1fr;gap:28px;max-width:1100px;width:100%;}
-    .card{
-      background:var(--card); border-radius:var(--radius); box-shadow:0 8px 30px rgba(2,12,40,.18);
-      padding:30px; transition:transform .28s ease, box-shadow .28s ease; overflow:hidden;
-    }
-    .card:hover{transform:translateY(-6px);box-shadow:0 18px 50px rgba(2,12,40,.22);}
-    h2{margin:0 0 12px;font-size:28px;color:#101828;text-align:center;font-weight:700;}
-    form{display:flex;flex-direction:column;gap:12px}
-    .input{
-      border:1px solid #e6e9ef;padding:12px 14px;border-radius:8px;font-size:15px;
-      outline:none;transition:box-shadow .18s ease,border-color .12s ease;
-    }
-    .input:focus{box-shadow:0 6px 24px rgba(11,115,201,0.12);border-color:var(--accent);}
-    .btn{
-      display:inline-block;padding:12px 16px;border-radius:10px;border:none;font-weight:600;
-      cursor:pointer;background:linear-gradient(180deg,var(--accent),#0862a6);color:#fff;font-size:15px;
-    }
-    .btn.ghost{background:#f5f7fa;color:#2b3440;border:1px solid #e6e9ef;}
-    .small{font-size:13px;color:var(--muted);text-align:center;margin-top:8px;}
-    .link{color:var(--accent);cursor:pointer;text-decoration:underline}
-    .or{display:flex;align-items:center;gap:12px;color:var(--muted);margin:8px 0;font-size:13px}
-    .or:before,.or:after{content:"";height:1px;background:#eee;flex:1}
-    .social-btn{display:flex;gap:10px;flex-direction:column}
-    .social{
-      display:flex;align-items:center;gap:12px;padding:10px;border-radius:8px;border:1px solid #e6e9ef;cursor:pointer;
-    }
-    .social .icon{width:28px;height:28px;border-radius:50%;display:inline-grid;place-items:center;background:#fff;}
-    .error{color:#b00020;font-size:13px}
-    .success{color:green;font-size:13px}
-    .toggle{display:flex;justify-content:center;gap:8px;margin-top:6px}
-    /* responsive */
-    @media (max-width:900px){.wrap{grid-template-columns:1fr;}}
+    body{margin:0;font-family:sans-serif;background:#4578ff;
+      display:flex;align-items:center;justify-content:center;min-height:100vh}
+    .card{background:#fff;padding:30px;border-radius:10px;width:350px;
+      box-shadow:0 8px 20px rgba(0,0,0,.2);}
+    h2{text-align:center;margin-bottom:20px;}
+    .input{width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
+    .btn{width:100%;padding:12px;background:#0b73c9;color:#fff;border:none;border-radius:6px;margin-top:8px;cursor:pointer;font-weight:600}
+    .link{text-align:center;margin-top:10px;font-size:14px}
+    .or{text-align:center;margin:12px 0;color:#777}
+    .social{display:flex;align-items:center;justify-content:center;gap:10px;
+      padding:10px;border:1px solid #ccc;border-radius:6px;margin:4px 0;cursor:pointer}
+    .error{color:red;font-size:13px;margin-top:6px}
+    .success{color:green;font-size:13px;margin-top:6px}
   </style>
 </head>
 <body>
 
-  <div class="wrap">
-    <!-- LOGIN CARD -->
-    <div class="card" id="loginCard">
-      <h2>Login</h2>
-      <form id="loginForm" autocomplete="off">
-        <input class="input" id="loginEmail" type="email" placeholder="Email" required />
-        <div style="display:flex;gap:8px;align-items:center;">
-          <input class="input" id="loginPassword" type="password" placeholder="Password" style="flex:1" required />
-          <button type="button" id="toggleLoginPwd" class="btn ghost" style="padding:8px 10px;">👁️</button>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div class="small"><a class="link" id="showSignup">Don't have an account? Signup</a></div>
-          <button type="submit" class="btn">Login</button>
-        </div>
-
-        <div class="or">Or</div>
-
-        <div class="social-btn">
-          <div class="social" id="googleLogin">
-            <div class="icon"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" width="18"/></div>
-            <div>Login with Google</div>
-          </div>
-        </div>
-
-        <div id="loginMsg" style="margin-top:8px"></div>
-      </form>
-    </div>
-
-    <!-- SIGNUP CARD -->
-    <div class="card" id="signupCard">
-      <h2>Signup</h2>
-      <form id="signupForm" autocomplete="off">
-        <input class="input" id="signupEmail" type="email" placeholder="Email" required />
-        <input class="input" id="signupPassword" type="password" placeholder="Create password" required />
-        <input class="input" id="signupConfirm" type="password" placeholder="Confirm password" required />
-
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div class="small"><a class="link" id="showLogin">Already have an account? Login</a></div>
-          <button type="submit" class="btn">Signup</button>
-        </div>
-
-        <div class="or">Or</div>
-
-        <div class="social-btn">
-          <div class="social" id="googleSignup">
-            <div class="icon"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="G" width="18"/></div>
-            <div>Signup with Google</div>
-          </div>
-        </div>
-
-        <div id="signupMsg" style="margin-top:8px"></div>
-      </form>
-    </div>
+  <div class="card">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="email" id="loginEmail" class="input" placeholder="Email" required />
+      <input type="password" id="loginPassword" class="input" placeholder="Password" required />
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <div id="loginMsg"></div>
+    <div class="link">Don't have an account? <a href="signup.html">Signup</a></div>
+    <div class="or">OR</div>
+    <div class="social" id="googleLogin">Login with Google</div>
   </div>
 
-  <!-- Firebase + App script (module) -->
   <script type="module">
-    // ----- IMPORT FIREBASE (modular) -----
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import {
-      getAuth,
-      createUserWithEmailAndPassword,
-      signInWithEmailAndPassword,
-      GoogleAuthProvider,
-      signInWithPopup,
-      signOut,
-      onAuthStateChanged,
-      sendEmailVerification
-    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
+      from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
-    // ====== यहाँ अपना firebaseConfig डालें ======
+    // ====== अपना Firebase Config डालें ======
     const firebaseConfig = {
       apiKey: "YOUR_API_KEY",
       authDomain: "YOUR_AUTH_DOMAIN",
       projectId: "YOUR_PROJECT_ID",
       appId: "YOUR_APP_ID",
-      // ...बचा हुआ config
     };
-    // ============================================
-
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
 
-    // UI elements
     const loginForm = document.getElementById("loginForm");
-    const signupForm = document.getElementById("signupForm");
     const loginMsg = document.getElementById("loginMsg");
-    const signupMsg = document.getElementById("signupMsg");
-    const googleLogin = document.getElementById("googleLogin");
-    const googleSignup = document.getElementById("googleSignup");
-    const showSignup = document.getElementById("showSignup");
-    const showLogin = document.getElementById("showLogin");
-    const toggleLoginPwd = document.getElementById("toggleLoginPwd");
 
-    // Small helpers
-    function showMessage(el, text, ok=true){
-      el.innerHTML = text ? `<div class="${ok?'success':'error'}">${text}</div>` : "";
+    function showMessage(msg, ok=true){
+      loginMsg.innerHTML = `<div class="${ok?'success':'error'}">${msg}</div>`;
     }
-    function clearMessages(){ showMessage(loginMsg,""); showMessage(signupMsg,""); }
 
-    // Toggle views
-    showSignup.addEventListener("click", (e)=>{ e.preventDefault(); document.getElementById('signupCard').scrollIntoView({behavior:'smooth'}); });
-    showLogin.addEventListener("click", (e)=>{ e.preventDefault(); document.getElementById('loginCard').scrollIntoView({behavior:'smooth'}); });
-
-    // Toggle password visibility for login
-    toggleLoginPwd.addEventListener("click", ()=>{
-      const p = document.getElementById("loginPassword");
-      p.type = p.type === "password" ? "text" : "password";
-      toggleLoginPwd.textContent = p.type === "password" ? "👁️" : "🙈";
-    });
-
-    // SIGNUP with email/password
-    signupForm.addEventListener("submit", async (e)=>{
-      e.preventDefault(); clearMessages();
-      const email = document.getElementById("signupEmail").value.trim();
-      const pass = document.getElementById("signupPassword").value;
-      const conf = document.getElementById("signupConfirm").value;
-      if(pass.length < 6){ showMessage(signupMsg,"Password कम से कम 6 अक्षर का होना चाहिए।", false); return; }
-      if(pass !== conf){ showMessage(signupMsg,"Password और Confirm password मेल नहीं खाते।", false); return; }
-
-      try{
-        const userCred = await createUserWithEmailAndPassword(auth, email, pass);
-        // वैकल्पिक: verification email भेजें
-        try { await sendEmailVerification(userCred.user); showMessage(signupMsg,"Account बना दिया गया। कृपया email verify करें।"); }
-        catch(err){ showMessage(signupMsg,"Account बना पर verification भेजने में त्रुटि।", false); console.error(err); }
-      }catch(err){
-        console.error(err);
-        showMessage(signupMsg, err.message || "Signup में त्रुटि हुई।", false);
-      }
-    });
-
-    // LOGIN with email/password
+    // Email Login
     loginForm.addEventListener("submit", async (e)=>{
-      e.preventDefault(); clearMessages();
-      const email = document.getElementById("loginEmail").value.trim();
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value;
       const pass = document.getElementById("loginPassword").value;
       try{
-        const userCred = await signInWithEmailAndPassword(auth, email, pass);
-        showMessage(loginMsg,`Welcome ${userCred.user.email}`); // यहाँ redirect कर सकते हैं
-      }catch(err){
-        console.error(err);
-        showMessage(loginMsg, err.message || "Login में त्रुटि।", false);
-      }
+        const userCred = await signInWithEmailAndPassword(auth,email,pass);
+        showMessage("Welcome "+userCred.user.email);
+        // यहाँ आप redirect कर सकते हैं → window.location.href="dashboard.html";
+      }catch(err){ showMessage(err.message,false); }
     });
 
-    // GOOGLE SIGN IN (popup)
-    async function signInWithGoogleFlow(){
-      clearMessages();
+    // Google Login
+    document.getElementById("googleLogin").addEventListener("click", async ()=>{
       try{
-        const res = await signInWithPopup(auth, provider);
-        // res.user contains user info
-        showMessage(loginMsg, `Signed in as ${res.user.email}`);
-      }catch(err){
-        console.error(err);
-        showMessage(loginMsg, "Google sign-in रद्द या असफल।", false);
-      }
-    }
-    googleLogin.addEventListener("click", signInWithGoogleFlow);
-    googleSignup.addEventListener("click", signInWithGoogleFlow);
-
-    // Optional: observe auth state
-    onAuthStateChanged(auth, user => {
-      if(user){
-        // user logged in
-        console.log("User:", user.email, user.uid);
-        // आप यहाँ redirect कर सकते हैं — उदाहरण:
-        // window.location.href = "/dashboard.html";
-      } else {
-        console.log("No user");
-      }
+        const res = await signInWithPopup(auth,provider);
+        showMessage("Logged in as "+res.user.email);
+      }catch(err){ showMessage("Google Login Failed",false); }
     });
-
-    // OPTIONAL: sign out helper (debugging)
-    // window.mySignOut = async ()=>{ await signOut(auth); alert('Signed out'); };
-
   </script>
 </body>
 </html>
