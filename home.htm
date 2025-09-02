@@ -1,151 +1,249 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>darklight000999 - Secure Viewer</title>
-  <style>
-    * {margin:0; padding:0; box-sizing:border-box;}
-    body {
-      font-family: 'Courier New', monospace;
-      background: black;
-      color: #00ff00;
-      overflow-x: hidden;
-      user-select: none;
-      position: relative;
-    }
-    canvas {
-      position: fixed; top:0; left:0; z-index:-2;
-      width:100%; height:100%; background:black;
-    }
-    header {
-      display:flex; align-items:center; justify-content:center;
-      gap:20px; padding:20px;
-      font-size:28px; font-weight:bold; color:#00ff00;
-      text-shadow:0 0 15px #00ff00;
-      border-bottom:2px solid #00ff00; margin-bottom:20px;
-      position:relative; z-index:5;
-    }
-    header img {
-      height:50px; width:50px; object-fit:cover;
-      border-radius:50%; box-shadow:0 0 10px #00ff00;
-    }
-    nav {text-align:center; margin:20px; position:relative; z-index:5;}
-    nav button {
-      margin:10px; padding:10px 20px;
-      background:#00ff00; color:black; border:none; border-radius:5px;
-      cursor:pointer; font-weight:bold;
-      box-shadow:0 0 10px #00ff00;
-    }
-    section {
-      display:none; padding:20px; position:relative; z-index:5;
-    }
-    section.active {display:block;}
-    .viewer img {
-      max-width:80%; margin:20px auto; display:block;
-      pointer-events:none; box-shadow:0 0 20px #00ff00;
-      border-radius:10px;
-    }
-    .watermark-overlay {
-      position:fixed; top:0; left:0; width:100%; height:100%;
-      pointer-events:none; z-index:9999;
-      display:flex; flex-wrap:wrap;
-      justify-content:center; align-items:center;
-      opacity:0.15;
-    }
-    .watermark-text {
-      font-size:48px; font-weight:bold; color:#00ff00;
-      text-shadow:0 0 10px #00ff00; transform:rotate(-30deg);
-      margin:50px; white-space:nowrap;
-    }
-  </style>
-</head>
-<body>
-  <canvas id="matrix"></canvas>
+import React, { useState } from "react";
 
-  <header>
-    <img src="https://raw.githubusercontent.com/Darklight000999/Nots-pdfclass897/main/Screenshot_20250821_142735.jpg" alt="Logo Left">
-    darklight000999
-    <img src="https://raw.githubusercontent.com/Darklight000999/Nots-pdfclass897/main/Screenshot_20250821_142735.jpg" alt="Logo Right">
-  </header>
+/* CyberShieldHome (React + Tailwind) — Final with full animations + hamburger menu
 
-  <nav>
-    <button onclick="showSection('notes')">📒 Notes</button>
-    <button onclick="showSection('pdf')">📕 PDF Viewer</button>
-  </nav>
+Single-file React component ready to paste into a CRA / Vite + Tailwind project
 
-  <section id="notes" class="active">
-    <h2>📒 Secure Notes</h2>
-    <p>
-      यह सेक्शन आपके Text Notes के लिए है।<br>
-      Premium students को यह display कर सकते हैं।
-    </p>
-  </section>
+Navbar has a 3-line hamburger (animated) that toggles a sliding mobile menu
 
-  <section id="pdf">
-  <h2>📕 Secure PDF Viewer</h2>
-  <div class="viewer">
-    <!-- अब images normal order में दिखाई देंगी (Page 1 सबसे ऊपर) -->
-    <img src="Road map satisfied Ethical Hacke_202508231918_1.jpg" alt="Page 1">
-    <img src="Road map satisfied Ethical Hacke_202508231918_2.jpg" alt="Page 2">
-    <img src="Road map satisfied Ethical Hacke_202508231918_3.jpg" alt="Page 3">
-    <img src="Road map satisfied Ethical Hacke_202508231918_4.jpg" alt="Page 4">
-    <img src="Road map satisfied Ethical Hacke_202508231918_5.jpg" alt="Page 5">
-    <img src="Road map satisfied Ethical Hacke_202508231918_6.jpg" alt="Page 6">
+Lots of animated accents using Tailwind + a few custom keyframes included inside a <style> block
+
+Replace asset URLs in ASSETS object with your real CDN/local paths
+
+
+How to use:
+
+1. Ensure Tailwind is configured in your React project.
+
+
+2. Save this file as CyberShieldHome.jsx and import it into your app.
+
+
+3. Swap assets in ASSETS. */
+
+
+
+const ASSETS = { logoText: "CyberShield", logoSubtitle: "Advanced Security Solutions", heroVideo: "/assets/videos/hero-loop.mp4", liveStreamVideo: "/assets/videos/live-stream.mp4", blogImages: [ "/assets/images/blog1.jpg", "/assets/images/blog2.jpg", "/assets/images/blog3.jpg", ], contactEmail: "hello@cybershield.example", phone: "+91 98765 43210", };
+
+export default function CyberShieldHome({ assets = ASSETS }) { const [menuOpen, setMenuOpen] = useState(false);
+
+return ( <div className="min-h-screen bg-[#030617] text-[#d7eefc]"> {/* custom keyframes + small helper styles */} <style>{@keyframes floatY {0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}} @keyframes ring {0%{transform:scale(0.9);opacity:0.6}50%{transform:scale(1.08);opacity:0.95}100%{transform:scale(0.9);opacity:0.6}} .floatY{animation:floatY 4s ease-in-out infinite} .ringAnim{animation:ring 6s ease-in-out infinite} /* hamburger lines transform */ .line{width:22px;height:2px;background:linear-gradient(90deg,#2dd4ff,#0ea5e9);border-radius:2px;display:block}}</style>
+
+<div className="max-w-7xl mx-auto p-6">
+    {/* Header with hamburger */}
+    <header className="flex items-center justify-between py-4 relative">
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-sky-400 to-cyan-500 flex items-center justify-center shadow-lg transform-gpu transition-transform duration-700 hover:scale-105">
+          <svg viewBox="0 0 24 24" className="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"><path d="M12 2l7 4v6c0 5-4 9-7 10-3-1-7-5-7-10V6l7-4z" fill="currentColor"/></svg>
+        </div>
+        <div>
+          <div className="font-semibold text-lg">{assets.logoText}</div>
+          <div className="text-sm text-slate-300">{assets.logoSubtitle}</div>
+        </div>
+      </div>
+
+      {/* Desktop nav */}
+      <nav className="hidden md:flex items-center gap-6">
+        <a href="#features" className="text-slate-300 hover:text-white transition">Features</a>
+        <a href="#ecosystem" className="text-slate-300 hover:text-white transition">Ecosystem</a>
+        <a href="#blog" className="text-slate-300 hover:text-white transition">Blog</a>
+        <a href="#contact" className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-400 to-cyan-500 text-[#001220] px-4 py-2 rounded-lg font-semibold">Get Started</a>
+      </nav>
+
+      {/* Hamburger for mobile */}
+      <button onClick={() => setMenuOpen(!menuOpen)} aria-label="menu" className="md:hidden z-30 p-2 rounded-lg bg-white/3 backdrop-blur-sm">
+        <div className="flex flex-col gap-1.5 items-center justify-center w-7 h-7">
+          <span className="line" style={{ transform: menuOpen ? 'translateY(6px) rotate(45deg)' : 'none', transition: 'all 300ms ease' }} />
+          <span className="line" style={{ opacity: menuOpen ? 0 : 1, transition: 'all 250ms ease' }} />
+          <span className="line" style={{ transform: menuOpen ? 'translateY(-6px) rotate(-45deg)' : 'none', transition: 'all 300ms ease' }} />
+        </div>
+      </button>
+
+      {/* Mobile sliding menu */}
+      <div className={`fixed top-0 right-0 h-full w-64 bg-[#021022] backdrop-blur-md shadow-2xl transform ${menuOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-400 md:hidden z-20`}>
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <div className="font-semibold text-lg">{assets.logoText}</div>
+              <div className="text-sm text-slate-300">{assets.logoSubtitle}</div>
+            </div>
+            <button onClick={() => setMenuOpen(false)} className="p-2 rounded-md bg-white/5">Close</button>
+          </div>
+          <ul className="flex flex-col gap-4">
+            <li><a href="#features" onClick={() => setMenuOpen(false)} className="block py-2 px-3 rounded-md hover:bg-white/3">Features</a></li>
+            <li><a href="#ecosystem" onClick={() => setMenuOpen(false)} className="block py-2 px-3 rounded-md hover:bg-white/3">Ecosystem</a></li>
+            <li><a href="#blog" onClick={() => setMenuOpen(false)} className="block py-2 px-3 rounded-md hover:bg-white/3">Blog</a></li>
+            <li><a href="#contact" onClick={() => setMenuOpen(false)} className="block py-2 px-3 rounded-md bg-gradient-to-r from-sky-400 to-cyan-500 text-[#001220]">Get Started</a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    {/* Hero */}
+    <section className="relative rounded-xl overflow-hidden mt-6 shadow-[0_20px_60px_rgba(2,10,20,0.6)]">
+      <video className="absolute inset-0 w-full h-full object-cover opacity-28 grayscale" autoPlay muted loop playsInline src={assets.heroVideo} />
+
+      <div className="relative z-10 p-8 md:p-12 lg:p-16 flex flex-col md:flex-row gap-8 items-start">
+        <div className="flex-1">
+          <h1 className="text-3xl md:text-4xl font-extrabold mb-4 leading-tight drop-shadow-xl">हम आपकी डिजिटल दुनिया को सुरक्षित रखते हैं — रियल-टाइम साइबर प्रोटेक्शन</h1>
+          <p className="text-slate-300 mb-6">AI-नियंत्रित खतरा पहचान, 24/7 निगरानी और तत्काल रिस्पॉन्स — सब एक आसान प्लेटफ़ॉर्म में।</p>
+
+          <div className="flex gap-3 items-center">
+            <button className="px-4 py-2 rounded-lg font-semibold bg-gradient-to-r from-sky-400 to-cyan-500 text-[#001220] transform transition-transform duration-300 hover:scale-105">Free Demo</button>
+            <button className="px-4 py-2 rounded-lg border border-white/10 text-slate-300 hover:bg-white/3">Learn More</button>
+          </div>
+
+          <div className="flex gap-3 mt-6">
+            <div className="bg-white/5 p-3 rounded-lg shadow-sm transform transition-all duration-700 hover:scale-105">
+              <div className="text-sky-300 font-bold">0.3s</div>
+              <div className="text-sm text-slate-300">Avg. Threat Detect</div>
+            </div>
+            <div className="bg-white/5 p-3 rounded-lg shadow-sm transform transition-all duration-700 hover:scale-105">
+              <div className="text-sky-300 font-bold">99.98%</div>
+              <div className="text-sm text-slate-300">Uptime</div>
+            </div>
+          </div>
+        </div>
+
+        <div className="w-full md:w-96">
+          <div className="bg-gradient-to-b from-slate-800/40 to-slate-900/40 p-4 rounded-lg border border-white/5 transform transition-transform duration-700 hover:scale-102">
+            <div className="text-sm text-slate-300 mb-3">Live Cyber 🔒 Stream</div>
+            <div className="h-52 rounded-md overflow-hidden relative">
+              <video className="w-full h-full object-cover" autoPlay muted loop playsInline src={assets.liveStreamVideo} />
+              <div className="absolute left-3 bottom-3 bg-black/40 px-3 py-1 rounded-md text-xs font-semibold">LIVE • 24/7</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Animated feature cards */}
+    <section id="features" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+      <div className="p-5 rounded-lg border border-white/5 bg-gradient-to-b from-white/2 to-white/1 transform transition duration-700 hover:-translate-y-2 hover:shadow-2xl floatY">
+        <h4 className="text-lg font-semibold mb-2">Threat Intelligence</h4>
+        <p className="text-sm text-slate-300">रीयल-टाइम डाटा फ़ीड्स और AI मॉडल से जोखिम का पूर्वानुमान।</p>
+      </div>
+
+      <div className="p-5 rounded-lg border border-white/5 bg-gradient-to-b from-white/2 to-white/1 transform transition duration-700 hover:-translate-y-2 hover:shadow-2xl ringAnim">
+        <h4 className="text-lg font-semibold mb-2">Endpoint Protection</h4>
+        <p className="text-sm text-slate-300">एंडपॉइंट-लेवल सुरक्षा, रिमोट रिपेयर और इन्सिडेंट लॉगिंग।</p>
+      </div>
+
+      <div className="p-5 rounded-lg border border-white/5 bg-gradient-to-b from-white/2 to-white/1 transform transition duration-700 hover:-translate-y-2 hover:shadow-2xl floatY">
+        <h4 className="text-lg font-semibold mb-2">Network Monitoring</h4>
+        <p className="text-sm text-slate-300">नैटवर्क एनॉमली डिटेक्शन और विज़ुअलाइज़ेशन डैशबोर्ड।</p>
+      </div>
+    </section>
+
+    {/* Ecosystem + animated shield */}
+    <section id="ecosystem" className="flex flex-col md:flex-row gap-6 items-center mt-8 bg-gradient-to-b from-slate-800/40 to-slate-900/40 p-6 rounded-lg">
+      <div className="w-80 flex items-center justify-center">
+        <svg viewBox="0 0 200 200" className="w-64 h-64 drop-shadow-2xl transform-gpu transition-transform duration-1000 hover:scale-105" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stopColor="#2dd4ff"/><stop offset="1" stopColor="#0ea5e9"/></linearGradient>
+          </defs>
+          <g className="transform-gpu" style={{ animation: 'ring 6s ease-in-out infinite' }}>
+            <circle cx="100" cy="100" r="74" fill="rgba(6,24,34,0.7)" stroke="url(#g1)" strokeWidth="2"/>
+            <path d="M100 42v34l22 12v32c0 18-10 32-22 38-12-6-22-20-22-38V88l22-12V42z" fill="#0ff" fillOpacity="0.06"/>
+            <path d="M100 48v26l18 10v28c0 15-8 28-18 33-10-5-18-18-18-33V84l18-10V48z" fill="#2dd4ff" fillOpacity="0.08"/>
+            <path d="M100 54v18l14 8v24c0 12-6 24-14 28-8-4-14-16-14-28V84l14-8V54z" fill="#2dd4ff" className="floatY"/>
+          </g>
+        </svg>
+      </div>
+
+      <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="p-4 bg-slate-900/60 rounded-lg border border-white/5 hover:scale-105 transform transition"> 
+          <h5 className="font-semibold">SIEM Integration</h5>
+          <p className="text-sm text-slate-300">ईवेंट कलेक्शन और ऑर्केस्ट्रेशन</p>
+        </div>
+        <div className="p-4 bg-slate-900/60 rounded-lg border border-white/5 hover:scale-105 transform transition">
+          <h5 className="font-semibold">Cloud Security</h5>
+          <p className="text-sm text-slate-300">Multi-cloud सुरक्षा और IAM</p>
+        </div>
+        <div className="p-4 bg-slate-900/60 rounded-lg border border-white/5 hover:scale-105 transform transition">
+          <h5 className="font-semibold">Forensics</h5>
+          <p className="text-sm text-slate-300">घटना विश्लेषण और रिपोर्ट</p>
+        </div>
+        <div className="p-4 bg-slate-900/60 rounded-lg border border-white/5 hover:scale-105 transform transition">
+          <h5 className="font-semibold">Automation</h5>
+          <p className="text-sm text-slate-300">Response playbooks और स्क्रिप्टिंग</p>
+        </div>
+      </div>
+    </section>
+
+    {/* Blog */}
+    <section id="blog" className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+      {assets.blogImages.map((img, i) => (
+        <article key={i} className="rounded-lg overflow-hidden bg-gradient-to-b from-slate-800/50 to-slate-900/60 border border-white/5 transform transition duration-700 hover:-translate-y-2 hover:shadow-2xl">
+          <img src={img} alt={`blog-${i}`} className="w-full h-40 object-cover" />
+          <div className="p-4">
+            <h4 className="font-semibold">{i === 0 ? 'Kernel Level Threats — क्या जानें' : i === 1 ? 'IoT सुरक्षा के बेसिक टिप्स' : 'रिअल-टाइम मॉनिटरिंग टूल्स'}</h4>
+            <p className="text-sm text-slate-300 mt-2">{i === 0 ? 'एक गहराई से लेख जो बताता है कि कैसे आधुनिक खतरे कर्नल स्तर पर काम करते हैं।' : i === 1 ? 'कैमरा और राउटर सुरक्षा के लिए बुनियादी कदम।' : 'वे उपकरण जो 24/7 निगरानी को आसान बनाते हैं।'}</p>
+          </div>
+        </article>
+      ))}
+    </section>
+
+    {/* Testimonials */}
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+      <div className="p-4 rounded-lg bg-slate-900/40 border border-white/5 transform transition hover:scale-105">
+        <div className="font-semibold">"हमारे नेटवर्क पर हमला रोक दिया"</div>
+        <div className="text-sm text-slate-300 mt-2">— Rajesh, CTO</div>
+      </div>
+      <div className="p-4 rounded-lg bg-slate-900/40 border border-white/5 transform transition hover:scale-105">
+        <div className="font-semibold">"Logs और zichtbaarheid ने मदद की"</div>
+        <div className="text-sm text-slate-300 mt-2">— Priya, SOC Analyst</div>
+      </div>
+      <div className="p-4 rounded-lg bg-slate-900/40 border border-white/5 transform transition hover:scale-105">
+        <div className="font-semibold">"कम समय में रिस्पॉन्स बढ़ गया"</div>
+        <div className="text-sm text-slate-300 mt-2">— Aman, DevOps</div>
+      </div>
+    </section>
+
+    {/* Stats */}
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+      <div className="p-6 rounded-lg bg-gradient-to-r from-slate-800/40 to-slate-900/40 text-center transform transition hover:scale-105">
+        <h3 className="text-3xl font-bold text-sky-300">4.85</h3>
+        <p className="text-slate-300">Avg. Customer Rating</p>
+      </div>
+      <div className="p-6 rounded-lg bg-gradient-to-r from-slate-800/40 to-slate-900/40 text-center transform transition hover:scale-105">
+        <h3 className="text-3xl font-bold text-sky-300">650+</h3>
+        <p className="text-slate-300">Protected Enterprises</p>
+      </div>
+      <div className="p-6 rounded-lg bg-gradient-to-r from-slate-800/40 to-slate-900/40 text-center transform transition hover:scale-105">
+        <h3 className="text-3xl font-bold text-sky-300">99.98%</h3>
+        <p className="text-slate-300">Service Uptime</p>
+      </div>
+    </section>
+
+    {/* CTA */}
+    <section className="mt-8 p-6 rounded-lg bg-gradient-to-b from-slate-800/30 to-slate-900/30 flex flex-col md:flex-row items-center justify-between gap-4 transform transition hover:scale-102">
+      <div>
+        <h3 className="text-xl font-semibold">तैयार हैं अपनी सुरक्षा अगले स्तर पर ले जाने के लिए?</h3>
+        <p className="text-slate-300">हमारे साथ फ्री डेमो बुक करें और रिअल-टाइम निगरानी चालू करें।</p>
+      </div>
+      <div>
+        <button className="px-5 py-2 rounded-lg bg-gradient-to-r from-sky-400 to-cyan-500 text-[#001220] font-semibold">Book a Demo</button>
+      </div>
+    </section>
+
+    {/* Footer */}
+    <footer id="contact" className="mt-8 p-6 rounded-lg bg-[#021122] text-slate-300">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div>
+          <h4 className="text-lg font-semibold">{assets.logoText}</h4>
+          <p className="text-sm mt-2">Contact: {assets.contactEmail} • {assets.phone}</p>
+        </div>
+        <div className="flex items-center gap-4">
+          <a href="#" className="text-slate-300">Twitter</a>
+          <a href="#" className="text-slate-300">LinkedIn</a>
+          <a href="#" className="text-slate-300">YouTube</a>
+        </div>
+      </div>
+      <div className="mt-4 text-sm text-slate-400">© 2025 {assets.logoText}. All rights reserved.</div>
+    </footer>
   </div>
-</section>
+</div>
 
-  <!-- Watermark Overlay -->
-  <div class="watermark-overlay" id="wm-layer"></div>
+); }
 
-  <script>
-    document.addEventListener("contextmenu", e => e.preventDefault());
-    document.addEventListener("keydown", function(e) {
-      if ((e.ctrlKey && (["p","s","u","c"].includes(e.key))) || e.key === "PrintScreen") {
-        alert("🚫 Action Blocked!"); e.preventDefault();
-      }
-    });
-    window.addEventListener("keyup", function(e) {
-      if (e.key === "PrintScreen") {
-        document.body.innerHTML = "<h1 style='color:red;text-align:center;'>⚠ Screenshot Not Allowed ⚠</h1>";
-      }
-    });
-    function showSection(id) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-    }
-
-    const userName = "Rahul Sharma";  // Update dynamically if available
-    const userEmail = "rahul@example.com";
-    const watermarkText = `${userName} | ${userEmail}`;
-    const wmLayer = document.getElementById("wm-layer");
-    for (let i = 0; i < 20; i++) {
-      const span = document.createElement("div");
-      span.className = "watermark-text";
-      span.innerText = watermarkText;
-      wmLayer.appendChild(span);
-    }
-
-    const canvas = document.getElementById("matrix");
-    const ctx = canvas.getContext("2d");
-    canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    const letters = "01";
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(columns).fill(1);
-    function draw() {
-      ctx.fillStyle = "rgba(0,0,0,0.05)";
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      ctx.fillStyle = "#0F0";
-      ctx.font = fontSize + "px monospace";
-      drops.forEach((d, i) => {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, d * fontSize);
-        if (d * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      });
-    }
-    setInterval(draw, 33);
-  </script>
-</body>
-</html>
