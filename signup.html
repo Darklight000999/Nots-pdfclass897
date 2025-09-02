@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Signup — Neumorphism + Firebase</title>
+<style>
+  :root{
+    --bg:#e9ecef; --card:#eef1f5; --shadow-dark:rgba(0,0,0,.16); --shadow-light:rgba(255,255,255,.9);
+    --text:#2b2f38; --muted:#7c8797; --brand:#1b73e8; --radius:22px;
+  }
+  body{ margin:0; height:100vh; overflow:hidden; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        background:var(--bg); color:var(--text); display:grid; place-items:center; }
+  .scene{ position:fixed; inset:0; z-index:-1; filter: blur(50px) saturate(120%); }
+  .blob{ position:absolute; width:55vmax; height:55vmax; border-radius:50%; opacity:.65; mix-blend-mode:multiply; }
+  .b1{ background:radial-gradient(circle at 30% 30%, #ffd6e7 0%, #ff5fa2 40%, transparent 65%); animation: a 20s ease-in-out infinite alternate; }
+  .b2{ background:radial-gradient(circle at 30% 30%, #d2f4ff 0%, #1b73e8 40%, transparent 65%); animation: b 24s ease-in-out infinite alternate; }
+  .b3{ background:radial-gradient(circle at 30% 30%, #d8ffd6 0%, #2ec27e 40%, transparent 65%); animation: c 28s ease-in-out infinite alternate; }
+  @keyframes a{0%{transform:translate(-20%,-10%) scale(1)}100%{transform:translate(10%,20%) scale(1.2)}}
+  @keyframes b{0%{transform:translate(35%,35%) scale(1)}100%{transform:translate(-5%,10%) scale(1.15)}}
+  @keyframes c{0%{transform:translate(-10%,55%) scale(1)}100%{transform:translate(30%,5%) scale(1.25)}}
+
+  .card{ width:min(440px,92vw); background:var(--card); border-radius:var(--radius); padding:32px 28px;
+         box-shadow:18px 18px 40px var(--shadow-dark), -18px -18px 40px var(--shadow-light); }
+  .title{ text-align:center; font-weight:800; letter-spacing:.06em; margin:0 0 18px; }
+  .field{ margin:14px 0; }
+  label{ display:block; font-size:14px; color:var(--muted); margin:0 0 8px; }
+  .input{ width:100%; font-size:16px; padding:14px 16px; border:none; outline:none; color:var(--text); background:var(--card);
+          border-radius:16px; box-shadow: inset 6px 6px 14px rgba(0,0,0,.14), inset -6px -6px 14px rgba(255,255,255,.8); }
+  .input:focus{ box-shadow: inset 7px 7px 16px rgba(0,0,0,.18), inset -7px -7px 16px rgba(255,255,255,.95); }
+  .btn{ width:100%; margin-top:18px; padding:14px 16px; border:none; cursor:pointer; font-weight:700; letter-spacing:.02em; color:#2b5aa7; background:var(--card); border-radius:18px;
+        box-shadow: 10px 10px 22px rgba(0,0,0,.15), -10px -10px 22px rgba(255,255,255,.9); }
+  .btn:hover{ transform: translateY(-1px); }
+  .hr{ display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--muted); font-size:12px }
+  .hr::before,.hr::after{ content:""; height:1px; background:rgba(0,0,0,.08); flex:1; }
+  .gbtn{ display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px; }
+  .msg{ margin-top:10px; font-size:13px; text-align:center; }
+  .ok{ color:#1c8b4a } .err{ color:#c22 }
+  .toplink{ text-align:center; margin-bottom:6px; font-size:14px }
+  .toplink a{ color:var(--brand); text-decoration:none; }
+  .gicon{ width:18px; height:18px; display:inline-block }
+</style>
+</head>
+<body>
+  <div class="scene"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+  <div class="card">
+    <div class="toplink">पहले से खाता है? <a href="login.html">Login</a></div>
+    <h2 class="title">SIGNUP</h2>
+
+    <form id="signupForm" autocomplete="off">
+      <div class="field">
+        <label>Email</label>
+        <input class="input" id="signupEmail" type="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label>Create password</label>
+        <input class="input" id="signupPassword" type="password" placeholder="कम-से-कम 6 अक्षर" required>
+      </div>
+      <div class="field">
+        <label>Confirm password</label>
+        <input class="input" id="signupConfirm" type="password" placeholder="दोबारा वही पासवर्ड" required>
+      </div>
+
+      <button class="btn" type="submit">Create Account</button>
+
+      <div class="hr">OR</div>
+
+      <button type="button" class="btn gbtn" id="googleSignup">
+        <svg class="gicon" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.4 32.9 29 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.9 6.2 29.7 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c10 0 19-7.3 19-20 0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.3 16 18.8 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.9 6.2 29.7 4 24 4 16.1 4 9.2 8.5 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5 0 9.6-1.9 13-5.1l-6-4.9C29.8 35.2 27.1 36 24 36c-5 0-9.3-3.2-10.9-7.6l-6.6 5.1C8.4 39.6 15.6 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.3-4.6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.9 6.2 29.7 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c10 0 19-7.3 19-20 0-1.3-.1-2.3-.4-3.5z"/></svg>
+        Continue with Google
+      </button>
+
+      <div id="signupMsg" class="msg"></div>
+    </form>
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification }
+    from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+  // 💡 यहाँ अपना Firebase Config डालें
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    appId: "YOUR_APP_ID",
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const $ = (id)=>document.getElementById(id);
+  const msg = (t, ok=true)=>{$("signupMsg").innerHTML = `<span class="${ok?'ok':'err'}">${t}</span>`;}
+
+  $("signupForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const email=$("signupEmail").value.trim();
+    const pass=$("signupPassword").value;
+    const conf=$("signupConfirm").value;
+    if(pass.length<6){ msg("Password कम-से-कम 6 अर्ह होना चाहिए", false); return; }
+    if(pass!==conf){ msg("Password और Confirm मेल नहीं खाते", false); return; }
+    try{
+      const { user } = await createUserWithEmailAndPassword(auth,email,pass);
+      try{ await sendEmailVerification(user); }catch(e){}
+      msg(`Account created: ${user.email}. कृपया email verify करें।`);
+      // window.location.href="login.html";
+    }catch(err){ msg(err.message,false); }
+  });
+
+  $("googleSignup").onclick = async ()=>{
+    try{
+      const res = await signInWithPopup(auth, provider);
+      msg(`Signed in as ${res.user.email}`);
+    }catch(e){ msg("Google signup failed.", false); }
+  };
+</script>
+</body>
+</html>
