@@ -1,82 +1,211 @@
 <!doctype html>
 <html lang="hi">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Login - Firebase Auth</title>
-  <style>
-    body{margin:0;font-family:sans-serif;background:#4578ff;
-      display:flex;align-items:center;justify-content:center;min-height:100vh}
-    .card{background:#fff;padding:30px;border-radius:10px;width:350px;
-      box-shadow:0 8px 20px rgba(0,0,0,.2);}
-    h2{text-align:center;margin-bottom:20px;}
-    .input{width:100%;padding:12px;margin:6px 0;border:1px solid #ccc;border-radius:6px}
-    .btn{width:100%;padding:12px;background:#0b73c9;color:#fff;border:none;border-radius:6px;margin-top:8px;cursor:pointer;font-weight:600}
-    .link{text-align:center;margin-top:10px;font-size:14px}
-    .or{text-align:center;margin:12px 0;color:#777}
-    .social{display:flex;align-items:center;justify-content:center;gap:10px;
-      padding:10px;border:1px solid #ccc;border-radius:6px;margin:4px 0;cursor:pointer}
-    .error{color:red;font-size:13px;margin-top:6px}
-    .success{color:green;font-size:13px;margin-top:6px}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login — Neumorphism + Firebase</title>
+<style>
+  :root{
+    --bg:#e9ecef;
+    --card:#eef1f5;
+    --shadow-dark:rgba(0,0,0,.16);
+    --shadow-light:rgba(255,255,255,.9);
+    --text:#2b2f38;
+    --muted:#7c8797;
+    --brand:#1b73e8;
+    --radius:22px;
+  }
+  /* ===== Background with animated multi-color blobs ===== */
+  body{
+    margin:0; height:100vh; overflow:hidden; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    background: var(--bg); color:var(--text); display:grid; place-items:center;
+  }
+  .scene{
+    position:fixed; inset:0; z-index:-1; filter: blur(50px) saturate(120%);
+  }
+  .blob{
+    position:absolute; width:55vmax; height:55vmax; border-radius:50%;
+    opacity:.65; mix-blend-mode:multiply;
+    background:radial-gradient(circle at 30% 30%, #7cf 0%, #1b73e8 35%, transparent 60%);
+    animation: moveA 18s ease-in-out infinite alternate;
+  }
+  .blob.b2{
+    background:radial-gradient(circle at 30% 30%, #ffd280 0%, #ff6a3d 40%, transparent 65%);
+    animation: moveB 22s ease-in-out infinite alternate;
+  }
+  .blob.b3{
+    background:radial-gradient(circle at 30% 30%, #b5ffb3 0%, #30c48d 35%, transparent 60%);
+    animation: moveC 26s ease-in-out infinite alternate;
+  }
+  @keyframes moveA{
+    0%{transform:translate(-20%, -25%) scale(1);}
+    100%{transform:translate(15%, -10%) scale(1.15);}
+  }
+  @keyframes moveB{
+    0%{transform:translate(40%, 10%) scale(1);}
+    100%{transform:translate(-5%, 30%) scale(1.1);}
+  }
+  @keyframes moveC{
+    0%{transform:translate(-10%, 55%) scale(1);}
+    100%{transform:translate(35%, 15%) scale(1.25);}
+  }
+
+  /* ===== Neumorphism card ===== */
+  .card{
+    width:min(420px, 92vw);
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:32px 28px;
+    box-shadow:
+      18px 18px 40px var(--shadow-dark),
+      -18px -18px 40px var(--shadow-light);
+  }
+  .title{ text-align:center; font-weight:800; letter-spacing:.06em; margin:0 0 18px; }
+  .field{ margin:14px 0; }
+  label{ display:block; font-size:14px; color:var(--muted); margin:0 0 8px; }
+  .input{
+    width:100%; font-size:16px; padding:14px 16px; border:none; outline:none; color:var(--text);
+    background:var(--card);
+    border-radius:16px;
+    box-shadow:
+      inset 6px 6px 14px rgba(0,0,0,.14),
+      inset -6px -6px 14px rgba(255,255,255,.8);
+    transition: box-shadow .2s ease, transform .08s ease;
+  }
+  .input:focus{
+    box-shadow:
+      inset 7px 7px 16px rgba(0,0,0,.18),
+      inset -7px -7px 16px rgba(255,255,255,.95);
+    transform: translateY(-1px);
+  }
+  .inline{
+    display:flex; gap:10px; align-items:center;
+  }
+  .icon-btn{
+    border:none; background:var(--card); border-radius:14px; padding:10px 12px; cursor:pointer;
+    box-shadow:
+      6px 6px 12px rgba(0,0,0,.12),
+      -6px -6px 12px rgba(255,255,255,.85);
+  }
+  .btn{
+    width:100%; margin-top:18px; padding:14px 16px; border:none; cursor:pointer; font-weight:700; letter-spacing:.02em;
+    color:#2b5aa7; background:var(--card); border-radius:18px;
+    box-shadow:
+      10px 10px 22px rgba(0,0,0,.15),
+      -10px -10px 22px rgba(255,255,255,.9),
+      inset 0 0 0 rgba(0,0,0,0);
+    transition: transform .08s ease, box-shadow .18s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:active{
+    box-shadow:
+      inset 8px 8px 16px rgba(0,0,0,.14),
+      inset -8px -8px 16px rgba(255,255,255,.9);
+    transform: translateY(0);
+  }
+  .muted{ text-align:center; font-size:14px; color:var(--muted); margin-top:14px; }
+  .muted a{ color:#e43d3d; text-decoration:none; border-bottom:1px dashed currentColor; }
+  .hr{ display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--muted); font-size:12px }
+  .hr::before,.hr::after{ content:""; height:1px; background:rgba(0,0,0,.08); flex:1; }
+  .gbtn{
+    display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px;
+  }
+  .msg{ margin-top:10px; font-size:13px; text-align:center; }
+  .ok{ color:#1c8b4a } .err{ color:#c22 }
+  .toplink{ text-align:center; margin-bottom:6px; font-size:14px }
+  .toplink a{ color:var(--brand); text-decoration:none; }
+  .gicon{ width:18px; height:18px; display:inline-block }
+</style>
 </head>
 <body>
-
-  <div class="card">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="email" id="loginEmail" class="input" placeholder="Email" required />
-      <input type="password" id="loginPassword" class="input" placeholder="Password" required />
-      <button type="submit" class="btn">Login</button>
-    </form>
-    <div id="loginMsg"></div>
-    <div class="link">Don't have an account? <a href="signup.html">Signup</a></div>
-    <div class="or">OR</div>
-    <div class="social" id="googleLogin">Login with Google</div>
+  <!-- animated background -->
+  <div class="scene">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
   </div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } 
-      from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+  <div class="card">
+    <div class="toplink">खाता नहीं है? <a href="signup.html">Signup</a></div>
+    <h2 class="title">LOGIN</h2>
 
-    // ====== अपना Firebase Config डालें ======
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      appId: "YOUR_APP_ID",
-    };
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
+    <form id="loginForm" autocomplete="off">
+      <div class="field">
+        <label>Email</label>
+        <input class="input" id="loginEmail" type="email" placeholder="you@example.com" required>
+      </div>
 
-    const loginForm = document.getElementById("loginForm");
-    const loginMsg = document.getElementById("loginMsg");
+      <div class="field">
+        <label>Password</label>
+        <div class="inline">
+          <input class="input" id="loginPassword" type="password" placeholder="••••••••" required style="flex:1">
+          <button type="button" class="icon-btn" id="togglePwd" aria-label="toggle password">👁️</button>
+        </div>
+      </div>
 
-    function showMessage(msg, ok=true){
-      loginMsg.innerHTML = `<div class="${ok?'success':'error'}">${msg}</div>`;
-    }
+      <button class="btn" type="submit">Sign In</button>
+      <div class="muted">Forgot Password? <a href="#" id="resetLink">click here</a></div>
 
-    // Email Login
-    loginForm.addEventListener("submit", async (e)=>{
-      e.preventDefault();
-      const email = document.getElementById("loginEmail").value;
-      const pass = document.getElementById("loginPassword").value;
-      try{
-        const userCred = await signInWithEmailAndPassword(auth,email,pass);
-        showMessage("Welcome "+userCred.user.email);
-        // यहाँ आप redirect कर सकते हैं → window.location.href="dashboard.html";
-      }catch(err){ showMessage(err.message,false); }
-    });
+      <div class="hr">OR</div>
 
-    // Google Login
-    document.getElementById("googleLogin").addEventListener("click", async ()=>{
-      try{
-        const res = await signInWithPopup(auth,provider);
-        showMessage("Logged in as "+res.user.email);
-      }catch(err){ showMessage("Google Login Failed",false); }
-    });
-  </script>
+      <button type="button" class="btn gbtn" id="googleLogin">
+        <svg class="gicon" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.4 32.9 29 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.9 6.2 29.7 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c10 0 19-7.3 19-20 0-1.3-.1-2.3-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.3 16 18.8 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.9 6.2 29.7 4 24 4 16.1 4 9.2 8.5 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5 0 9.6-1.9 13-5.1l-6-4.9C29.8 35.2 27.1 36 24 36c-5 0-9.3-3.2-10.9-7.6l-6.6 5.1C8.4 39.6 15.6 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.3-4.6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.9 6.2 29.7 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c10 0 19-7.3 19-20 0-1.3-.1-2.3-.4-3.5z"/></svg>
+        Google Sign-In
+      </button>
+
+      <div id="loginMsg" class="msg"></div>
+    </form>
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail, GoogleAuthProvider, signInWithPopup }
+    from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+
+  // 💡 यहाँ अपना Firebase Config डालें
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    appId: "YOUR_APP_ID",
+  };
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  const $ = (id)=>document.getElementById(id);
+  const msg = (text, ok=true)=>{$("loginMsg").innerHTML = `<span class="${ok?'ok':'err'}">${text}</span>`;}
+
+  $("togglePwd").onclick = ()=>{
+    const p=$("loginPassword"); p.type = p.type==="password" ? "text" : "password";
+  };
+
+  $("loginForm").addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    try{
+      const email=$("loginEmail").value.trim(), pass=$("loginPassword").value;
+      const { user } = await signInWithEmailAndPassword(auth,email,pass);
+      msg(`Welcome ${user.email}`);
+      // window.location.href = "dashboard.html";
+    }catch(err){ msg(err.message,false); }
+  });
+
+  $("googleLogin").onclick = async ()=>{
+    try{
+      const res = await signInWithPopup(auth, provider);
+      msg(`Signed in as ${res.user.email}`);
+    }catch(e){ msg("Google sign-in failed.", false); }
+  };
+
+  $("resetLink").onclick = async (e)=>{
+    e.preventDefault();
+    const email = prompt("Reset link के लिए अपना email लिखें:");
+    if(!email) return;
+    try{
+      await sendPasswordResetEmail(auth, email);
+      msg("Password reset link भेज दिया गया।");
+    }catch(err){ msg(err.message,false); }
+  };
+</script>
 </body>
 </html>
